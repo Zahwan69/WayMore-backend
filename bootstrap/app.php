@@ -13,7 +13,10 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        // Lets routes use ->middleware('superadmin') as a short name.
+        $middleware->alias([
+            'superadmin' => \App\Http\Middleware\EnsureUserIsSuperadmin::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->shouldRenderJsonWhen(
